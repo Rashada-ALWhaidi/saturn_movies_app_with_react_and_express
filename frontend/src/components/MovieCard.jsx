@@ -1,15 +1,24 @@
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, isSelected, onSelect }) {
   return (
-    <article className="movie-card">
+    <article
+      className={`movie-card ${isSelected ? "is-selected" : ""}`.trim()}
+      onClick={() => onSelect(movie.id)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect(movie.id);
+        }
+      }}
+    >
       {movie.primaryImage ? (
         <img src={movie.primaryImage} alt={movie.primaryTitle} />
       ) : (
-        <div className="movie-card__fallback">{movie.primaryTitle}</div>
+        <div className="fallback">{movie.primaryTitle}</div>
       )}
-      <div className="movie-card__overlay">
-        <p className="movie-card__title">{movie.primaryTitle}</p>
-        <span className="movie-card__year">{movie.startYear}</span>
-      </div>
+
+      <p className="card-title">{movie.primaryTitle}</p>
     </article>
   );
 }

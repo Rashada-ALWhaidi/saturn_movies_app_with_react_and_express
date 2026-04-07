@@ -1,55 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getMovies } from "./api/moviesApi";
 import MovieList from "./components/MovieList";
+import MovieDetails from "./components/MovieDetails";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [status, setStatus] = useState({
-    type: "loading",
-    message: "Loading movies...",
-  });
+  const [selectedMovieId, setSelectedMovieId] = useState(null);
 
   useEffect(() => {
     const loadMovies = async () => {
-      try {
-        setStatus({ type: "loading", message: "Loading movies..." });
-        const data = await getMovies({ limit: 20 });
-        setMovies(data);
-        setStatus({
-          type: "success",
-          message: `${data.length} movies loaded.`,
-        });
-      } catch (error) {
-        setStatus({
-          type: "error",
-          message: error.message || "Failed to load movies.",
-        });
+      const data = await getMovies({ limit: 20 });
+      setMovies(data);
+
+      if (data.length > 0) {
+        setSelectedMovieId(data[0].id);
       }
     };
 
     loadMovies();
   }, []);
 
-  return (
-    <div className="app-shell">
-      <header className="hero">
-        <div className="hero__overlay" />
-        <div className="hero__content">
-          <h1>Movie App</h1>
-          <p className="hero__text">
-            React frontend rebuild started with the first task: displaying the
-            movie list while keeping the visual direction close to the original
-            project.
-          </p>
-          <p className={`status-message status-message--${status.type}`}>
-            {status.message}
-          </p>
-        </div>
-      </header>
+  const selectedMovie = useMemo(() => {
+    return movies.find((movie) => movie.id === selectedMovieId) || null;
+  }, [movies, selectedMovieId]);
 
-      <main className="page-content">
-        <MovieList movies={movies} />
-      </main>
-    </div>
+  return (
+    <main className="app-shell">
+      <section className="hero-content">
+        <MovieDetails movie={selectedMovie} />
+      </section>
+
+      <section className="movies-section">
+        <MovieList
+          movies={movies}
+          selectedMovieId={selectedMovieId}
+          onSelect={setSelectedMovieId}
+        />
+      </section>
+    </main>
   );
 }

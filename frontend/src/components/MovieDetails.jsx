@@ -1,4 +1,4 @@
-export default function MovieDetails({ movie, onOpenAdd }) {
+export default function MovieDetails({ movie, onOpenAdd, onEdit, onDelete }) {
   if (!movie) {
     return (
       <section className="movie-details">
@@ -7,7 +7,6 @@ export default function MovieDetails({ movie, onOpenAdd }) {
             Add Movie
           </button>
         </div>
-
         <p>No movie selected.</p>
       </section>
     );
@@ -19,6 +18,15 @@ export default function MovieDetails({ movie, onOpenAdd }) {
         <button type="button" className="primary-btn" onClick={onOpenAdd}>
           Add Movie
         </button>
+
+        <button
+          type="button"
+          className="secondary-btn"
+          onClick={() => onEdit(movie)}
+        >
+          Edit
+        </button>
+
       </div>
 
       <h1>{movie.primaryTitle}</h1>

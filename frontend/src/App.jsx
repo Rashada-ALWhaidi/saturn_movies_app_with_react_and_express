@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { addMovie, getMovies } from "./api/moviesApi";
+import { addMovie, deleteMovie, getMovies, updateMovie } from "./api/moviesApi";
 import MovieList from "./components/MovieList";
 import MovieDetails from "./components/MovieDetails";
 import MovieFormModal from "./components/MovieFormModal";
+import "./styles/main.css";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -21,7 +22,6 @@ export default function App() {
         const data = await getMovies({ search: searchValue, limit: 20 });
 
         setMovies(data);
-
         setStatusMessage(
           data.length
             ? `${data.length} movie${data.length > 1 ? "s" : ""} found.`
@@ -59,6 +59,22 @@ export default function App() {
     }
   };
 
+  const handleUpdateMovie = async (movieData) => {
+    try {
+      const editingMovie = modalState.movie;
+      if (!editingMovie) return;
+
+      const updated = await updateMovie(editingMovie.id, movieData);
+      const refreshed = await getMovies({ search: searchValue, limit: 20 });
+
+      setMovies(refreshed);
+      setSelectedMovieId(updated.id);
+      setModalState({ open: false, mode: "add", movie: null });
+      setStatusMessage("Movie updated successfully.");
+    } catch (error) {
+      setStatusMessage(error.message || "Failed to update movie.");
+    }
+  };
   return (
     <main className="app-shell">
       <header className="top-bar">
@@ -81,6 +97,8 @@ export default function App() {
           onOpenAdd={() =>
             setModalState({ open: true, mode: "add", movie: null })
           }
+          onEdit={(movie) => setModalState({ open: true, mode: "edit", movie })}
+          onDelete={handleDeleteMovie}
         />
       </section>
 
@@ -91,12 +109,15 @@ export default function App() {
           onSelect={setSelectedMovieId}
         />
       </section>
+
       <MovieFormModal
         open={modalState.open}
         mode={modalState.mode}
         movie={modalState.movie}
         onClose={() => setModalState({ open: false, mode: "add", movie: null })}
-        onSubmit={handleAddMovie}
+        onSubmit={
+          modalState.mode === "edit" ? handleUpdateMovie : handleAddMovie
+        }
       />
     </main>
   );

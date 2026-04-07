@@ -1,13 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
-import { getMovies } from "./api/moviesApi";
+import { addMovie, getMovies } from "./api/moviesApi";
 import MovieList from "./components/MovieList";
 import MovieDetails from "./components/MovieDetails";
+import MovieFormModal from "./components/MovieFormModal";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovieId, setSelectedMovieId] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const [modalState, setModalState] = useState({
+    open: false,
+    mode: "add",
+    movie: null,
+  });
 
   useEffect(() => {
     const loadMovies = async () => {
@@ -39,6 +45,20 @@ export default function App() {
     return movies.find((movie) => movie.id === selectedMovieId) || null;
   }, [movies, selectedMovieId]);
 
+  const handleAddMovie = async (movieData) => {
+    try {
+      const created = await addMovie(movieData);
+      const refreshed = await getMovies({ search: searchValue, limit: 20 });
+
+      setMovies(refreshed);
+      setSelectedMovieId(created.id);
+      setModalState({ open: false, mode: "add", movie: null });
+      setStatusMessage("Movie added successfully.");
+    } catch (error) {
+      setStatusMessage(error.message || "Failed to add movie.");
+    }
+  };
+
   return (
     <main className="app-shell">
       <header className="top-bar">
@@ -56,7 +76,12 @@ export default function App() {
       <p className="status-message">{statusMessage}</p>
 
       <section className="hero-content">
-        <MovieDetails movie={selectedMovie} />
+        <MovieDetails
+          movie={selectedMovie}
+          onOpenAdd={() =>
+            setModalState({ open: true, mode: "add", movie: null })
+          }
+        />
       </section>
 
       <section className="movies-section">
@@ -66,6 +91,13 @@ export default function App() {
           onSelect={setSelectedMovieId}
         />
       </section>
+      <MovieFormModal
+        open={modalState.open}
+        mode={modalState.mode}
+        movie={modalState.movie}
+        onClose={() => setModalState({ open: false, mode: "add", movie: null })}
+        onSubmit={handleAddMovie}
+      />
     </main>
   );
 }

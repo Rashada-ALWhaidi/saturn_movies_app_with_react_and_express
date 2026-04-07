@@ -56,10 +56,10 @@ export default function MovieFormModal({
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div className="movie-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="movie-modal-header">
+      <div className="modal-panel" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
           <h2>{mode === "edit" ? "Edit Movie" : "Add Movie"}</h2>
-          <button type="button" className="icon-btn" onClick={onClose}>
+          <button type="button" className="modal-close" onClick={onClose}>
             ×
           </button>
         </div>
@@ -144,10 +144,14 @@ export default function MovieFormModal({
           </label>
 
           <div className="movie-form-actions">
-            <button type="button" className="secondary-btn" onClick={onClose}>
+            <button
+              type="button"
+              className="secondary-action"
+              onClick={onClose}
+            >
               Cancel
             </button>
-            <button type="submit" className="primary-btn">
+            <button type="submit" className="ghost-action">
               {mode === "edit" ? "Save Changes" : "Add Movie"}
             </button>
           </div>

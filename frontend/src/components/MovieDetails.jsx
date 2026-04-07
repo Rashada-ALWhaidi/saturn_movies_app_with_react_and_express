@@ -27,6 +27,13 @@ export default function MovieDetails({ movie, onOpenAdd, onEdit, onDelete }) {
           Edit
         </button>
 
+        <button
+          type="button"
+          className="danger-btn"
+          onClick={() => onDelete(movie.id)}
+        >
+          Delete
+        </button>
       </div>
 
       <h1>{movie.primaryTitle}</h1>

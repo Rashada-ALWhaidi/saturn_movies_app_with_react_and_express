@@ -75,6 +75,27 @@ export default function App() {
       setStatusMessage(error.message || "Failed to update movie.");
     }
   };
+
+  const handleDeleteMovie = async (movieId) => {
+    try {
+      const confirmed = window.confirm(
+        "Are you sure you want to delete this movie?",
+      );
+      if (!confirmed) return;
+
+      await deleteMovie(movieId);
+      const refreshed = await getMovies({ search: searchValue, limit: 20 });
+
+      setMovies(refreshed);
+      setSelectedMovieId((prev) =>
+        prev === movieId ? (refreshed[0]?.id ?? null) : prev,
+      );
+      setStatusMessage("Movie deleted successfully.");
+    } catch (error) {
+      setStatusMessage(error.message || "Failed to delete movie.");
+    }
+  };
+
   return (
     <main className="app-shell">
       <header className="top-bar">

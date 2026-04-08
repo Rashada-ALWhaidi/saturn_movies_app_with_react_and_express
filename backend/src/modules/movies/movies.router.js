@@ -6,5 +6,7 @@ const router = Router();
 // GET /movies
 router.get("/", controller.getMovies);
 
+// GET /movies/:id
+router.get("/:id", controller.getMovieById);
 
 export default router;

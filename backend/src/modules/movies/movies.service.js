@@ -18,3 +18,11 @@ export const getAllMovies = async() => {
      const readingData = await readJsonFile();
     return readingData;
 }
+
+// get a single movie by id
+export const getMovieById = async(id) => {
+    const readingData = await readJsonFile();
+    const movie = readingData.find(movie => movie.id === parseInt(id));
+    return movie;
+    
+}

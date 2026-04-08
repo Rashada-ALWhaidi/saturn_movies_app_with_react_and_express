@@ -10,3 +10,15 @@ export const getMovies = async(req, res) => {
     }
   });
 }
+
+// get a single movie by id
+export const getMovieById = async(req, res) => {
+  const { id } = req.params;
+  const movie = await service.getMovieById(id);
+  res.json({
+    message: "success",
+    data: {
+      movie
+    }
+  });
+}

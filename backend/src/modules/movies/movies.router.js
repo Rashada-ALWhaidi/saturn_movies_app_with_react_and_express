@@ -13,6 +13,8 @@ router.get("/:id", asyncHandler(controller.getMovieById));
 // post /movies
 router.post("/", asyncHandler(controller.createMovie));
 
+// update movie
+router.patch("/:id", asyncHandler(controller.updateMovie));
 
 
 

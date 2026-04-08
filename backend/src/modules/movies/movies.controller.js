@@ -41,3 +41,25 @@ export const createMovie = async(req,res)=>{
     }
   });
 }
+
+// update movie
+export const updateMovie = async(req,res)=>{
+  const { id } = req.params;
+  const { title, director, releaseYear } = req.body;
+
+  const updatedMovie = await service.updateMovie(id, { title, director, releaseYear });
+   
+  if (!updatedMovie) {
+    return res.status(400).json({
+      message: "Failed to update movie"
+    });
+  }
+  res.json({
+    message: "Movie updated successfully",
+    data: {
+      movie: updatedMovie
+    }
+  });
+}
+
+

@@ -69,3 +69,40 @@ export const createMovie = async({ title, director, releaseYear }) => {
 
 
 }
+
+
+// update a movie
+export const updateMovie = async(id, { title, director, releaseYear }) => {
+    const readingData = await readJsonFile();
+
+    // find the index of the movie to be updated
+    const movieIndex = readingData.findIndex(movie => movie.id === parseInt(id));
+    if (movieIndex === -1) {
+        throw new AppError("Movie not found", 404);
+    }
+
+    // validate input data
+    if (title !== undefined && (typeof title !== 'string' || title.trim() === '')) {
+        throw new AppError("Title must be a non-empty string", 400);
+    }
+    if (director !== undefined && (typeof director !== 'string' || director.trim() === '')) {
+        throw new AppError("Director must be a non-empty string", 400);
+    }
+    if (releaseYear !== undefined && (typeof releaseYear !== 'number' || releaseYear <= 0)) {
+        throw new AppError("Release year must be a positive number", 400);
+    }
+
+    // update only provided fields
+    const updatedMovie = {
+        ...readingData[movieIndex],
+        ...(title && { title: title.trim() }),
+        ...(director && { director: director.trim() }),
+        ...(releaseYear && { releaseYear })
+    };
+
+    readingData[movieIndex] = updatedMovie;
+
+    // save the updated data to the JSON file
+    await fs.writeFile(filePath, JSON.stringify(readingData, null, 2));
+    return updatedMovie;
+}

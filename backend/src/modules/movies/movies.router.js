@@ -1,16 +1,17 @@
 import {Router} from "express";
 import * as controller from "./movies.controller.js"
+import { asyncHandler } from "../../utils/asyncHandler.js";
 
 const router = Router();
 
 // GET /movies
-router.get("/", controller.getMovies);
+router.get("/", asyncHandler(controller.getMovies));
 
 // GET /movies/:id
-router.get("/:id", controller.getMovieById);
+router.get("/:id", asyncHandler(controller.getMovieById));
 
 // post /movies
-router.post("/", controller.createMovie);
+router.post("/", asyncHandler(controller.createMovie));
 
 
 

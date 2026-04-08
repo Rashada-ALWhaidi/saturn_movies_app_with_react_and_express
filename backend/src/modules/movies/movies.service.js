@@ -22,7 +22,16 @@ export const getAllMovies = async() => {
 // get a single movie by id
 export const getMovieById = async(id) => {
     const readingData = await readJsonFile();
+
+// find the movie with the matching id
     const movie = readingData.find(movie => movie.id === parseInt(id));
+
+// validate if the movie exists
+    const movieExists = readingData.some(movie => movie.id === parseInt(id));
+    if (!movieExists) {
+        throw new Error("Movie not found");
+    }
+    
     return movie;
     
 }

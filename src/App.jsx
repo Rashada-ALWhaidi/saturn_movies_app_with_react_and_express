@@ -20,6 +20,11 @@ export default function App() {
     mode: "add",
     movie: null,
   });
+  
+  const [deleteState, setDeleteState] = useState({
+    open: false,
+    movieId: null,
+  });
 
   useEffect(() => {
     const trimmed = searchInput.trim();
@@ -132,11 +137,17 @@ export default function App() {
   };
 
   const handleDeleteMovie = async (movieId) => {
+    setDeleteState({
+      open: true,
+      movieId,
+    });
+  };
+
+  const confirmDeleteMovie = async () => {
     try {
-      const confirmed = window.confirm(
-        "Are you sure you want to delete this movie?",
-      );
-      if (!confirmed) return;
+      if (!deleteState.movieId) return;
+
+      const movieId = deleteState.movieId;
 
       await deleteMovie(movieId);
       const refreshed = await getMovies({ search: searchValue, limit: 20 });
@@ -145,13 +156,20 @@ export default function App() {
       setSelectedMovieId((prev) =>
         prev === movieId ? (refreshed[0]?.id ?? null) : prev,
       );
+
+      setDeleteState({ open: false, movieId: null });
       setStatus({ type: "success", message: "Movie deleted successfully." });
     } catch (error) {
+      setDeleteState({ open: false, movieId: null });
       setStatus({
         type: "error",
         message: error.message || "Failed to delete movie.",
       });
     }
+  };
+
+  const cancelDeleteMovie = () => {
+    setDeleteState({ open: false, movieId: null });
   };
 
   return (
@@ -207,6 +225,36 @@ export default function App() {
             onSelect={setSelectedMovieId}
           />
         </section>
+
+        {deleteState.open && (
+          <div className="modal-backdrop" onClick={cancelDeleteMovie}>
+            <div
+              className="confirm-delete-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h3>Delete Movie</h3>
+              <p>Are you sure you want to delete this movie?</p>
+
+              <div className="confirm-delete-actions">
+                <button
+                  type="button"
+                  className="secondary-action"
+                  onClick={cancelDeleteMovie}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  className="danger-action"
+                  onClick={confirmDeleteMovie}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         <MovieFormModal
           open={modalState.open}

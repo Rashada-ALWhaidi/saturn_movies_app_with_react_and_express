@@ -532,3 +532,34 @@ textarea {
         flex-basis: 160px;
     }
 }
+
+.confirm-delete-modal {
+    width: min(420px, 100%);
+    padding: 28px 24px;
+    border-radius: 22px;
+    background: rgba(9, 9, 14, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+.confirm-delete-modal h3 {
+    margin: 0 0 12px;
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.confirm-delete-modal p {
+    margin: 0;
+    color: #d7d7d7;
+    line-height: 1.7;
+}
+
+.confirm-delete-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}

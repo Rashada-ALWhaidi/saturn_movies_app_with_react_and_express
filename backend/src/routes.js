@@ -1,4 +1,5 @@
 import moviesRouter from "./modules/movies/movies.router.js";
+import { globalErrorHandler } from "./middlewares/globalErrorHandler.js";
 
 
 export function init(express, app){

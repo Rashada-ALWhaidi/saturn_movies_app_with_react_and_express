@@ -9,4 +9,13 @@ router.get("/", controller.getMovies);
 // GET /movies/:id
 router.get("/:id", controller.getMovieById);
 
+// post /movies
+router.post("/", controller.createMovie);
+
+
+
+
+
+
+
 export default router;

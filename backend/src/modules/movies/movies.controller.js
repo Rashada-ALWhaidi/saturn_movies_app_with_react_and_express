@@ -22,3 +22,22 @@ export const getMovieById = async(req, res) => {
     }
   });
 }
+
+
+// create movie
+export const createMovie = async(req,res)=>{
+  const { title, director, releaseYear } = req.body;
+  const newMovie = await service.createMovie({ title, director, releaseYear });
+  if (!newMovie) {
+    return res.status(400).json({
+      message: "Failed to create movie"
+
+    });
+  }
+  res.json({
+    message: "Movie created successfully",
+    data: {
+      movie: newMovie
+    }
+  });
+}

@@ -16,6 +16,9 @@ router.post("/", asyncHandler(controller.createMovie));
 // update movie
 router.patch("/:id", asyncHandler(controller.updateMovie));
 
+// delete movie
+router.delete("/:id", asyncHandler(controller.deleteMovie));
+
 
 
 

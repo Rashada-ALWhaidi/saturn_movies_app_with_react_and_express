@@ -63,3 +63,21 @@ export const updateMovie = async(req,res)=>{
 }
 
 
+// delete movie
+export const deleteMovie = async(req,res)=>{
+  const { id } = req.params;
+  const deletedMovie = await service.deleteMovie(id);
+  if (!deletedMovie) {
+    return res.status(400).json({
+      message: "Failed to delete movie"
+    });
+  }
+  res.json({
+    message: "Movie deleted successfully",
+    data: {
+      movie: deletedMovie
+    }
+  });
+
+}
+

@@ -106,3 +106,24 @@ export const updateMovie = async(id, { title, director, releaseYear }) => {
     await fs.writeFile(filePath, JSON.stringify(readingData, null, 2));
     return updatedMovie;
 }
+
+
+// delete a movie
+export const deleteMovie = async(id) => {
+
+    const readingData = await readJsonFile();
+
+    // find the index of the movie to be deleted
+    const movieIndex = readingData.findIndex(movie => movie.id === parseInt(id));
+    if (movieIndex === -1) {
+        throw new AppError("Movie not found", 404);
+    }
+
+    const deletedMovie = readingData[movieIndex];
+    // remove the movie from the data array
+    readingData.splice(movieIndex, 1);
+    // write the updated data back to the JSON file
+    await fs.writeFile(filePath, JSON.stringify(readingData, null, 2));
+    return deletedMovie;
+    
+}

@@ -19,7 +19,8 @@ router.patch("/:id", asyncHandler(controller.updateMovie));
 // delete movie
 router.delete("/:id", asyncHandler(controller.deleteMovie));
 
-
+// Search movies by title
+router.get("/search", asyncHandler(controller.searchMoviesByTitle));
 
 
 

@@ -81,3 +81,19 @@ export const deleteMovie = async(req,res)=>{
 
 }
 
+
+// search movies by title
+export const searchMoviesByTitle = async(req,res)=>{
+  const { title } = req.query;
+  const movies = await service.searchMoviesByTitle(title);
+
+  res.json({
+    message: "Movies retrieved successfully",
+    data: {
+      movies
+    }
+  });
+
+
+
+}

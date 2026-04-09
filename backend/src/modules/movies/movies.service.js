@@ -127,3 +127,25 @@ export const deleteMovie = async(id) => {
     return deletedMovie;
     
 }
+
+
+// search movies by title
+export const searchMoviesByTitle = async(title) => {
+    // validate the search query
+    if (!title) {
+       throw new AppError("Search query is required", 400);
+    }
+
+    const readingData = await readJsonFile();
+    
+    
+    // filter movies that match the search query
+    const matchingMovies = readingData.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
+   
+    // if no movies match the search query, return an error
+    if (matchingMovies.length === 0) {
+        throw new AppError("No movies found matching the search query", 404);
+    }
+    return matchingMovies;
+
+}

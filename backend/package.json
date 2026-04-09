@@ -1,0 +1,25 @@
+{
+  "name": "saturn_movies_app_with_react_and_express",
+  "version": "1.0.0",
+  "description": "- [Rashada al whaidi] - Backend\r - [Ibrahim Awad] - Frontend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rashada-ALWhaidi/saturn_movies_app_with_react_and_express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rashada-ALWhaidi/saturn_movies_app_with_react_and_express/issues"
+  },
+  "homepage": "https://github.com/Rashada-ALWhaidi/saturn_movies_app_with_react_and_express#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  },
+  "type": "module"
+}

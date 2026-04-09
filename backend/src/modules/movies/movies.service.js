@@ -149,3 +149,26 @@ export const searchMoviesByTitle = async(title) => {
     return matchingMovies;
 
 }
+
+
+// limit the number of movies returned
+export const limitMovies = async(limit) => {
+    
+    // validate the limit query
+    if (!limit) {
+        throw new AppError("Limit query is required", 400);
+    }
+
+    if (isNaN(limit) || limit <= 0) {
+        throw new AppError("Limit must be a positive number", 400);
+    }
+
+    const readingData = await readJsonFile();
+
+    // return only the specified number of movies
+   
+    const limitedMovies = readingData.slice(0, parseInt(limit));
+
+    return limitedMovies;
+
+}

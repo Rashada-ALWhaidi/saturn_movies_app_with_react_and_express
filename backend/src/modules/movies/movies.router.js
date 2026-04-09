@@ -7,6 +7,12 @@ const router = Router();
 // GET /movies
 router.get("/", asyncHandler(controller.getMovies));
 
+// limit the number of movies returned
+router.get("/limit", asyncHandler(controller.limitMovies));
+
+// Search movies by title
+router.get("/search", asyncHandler(controller.searchMoviesByTitle));
+
 // GET /movies/:id
 router.get("/:id", asyncHandler(controller.getMovieById));
 
@@ -19,8 +25,6 @@ router.patch("/:id", asyncHandler(controller.updateMovie));
 // delete movie
 router.delete("/:id", asyncHandler(controller.deleteMovie));
 
-// Search movies by title
-router.get("/search", asyncHandler(controller.searchMoviesByTitle));
 
 
 

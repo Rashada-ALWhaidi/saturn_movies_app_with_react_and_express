@@ -93,7 +93,20 @@ export const searchMoviesByTitle = async(req,res)=>{
       movies
     }
   });
-
-
-
 }
+
+
+ // limit the number of movies returned
+  export const limitMovies = async(req,res)=>{
+    const { limit } = req.query;
+    
+    const movies = await service.limitMovies(parseInt(limit));
+    
+    res.json({
+      message: "Movies retrieved successfully",
+      data: {
+        movies
+      }
+    });
+  }
+

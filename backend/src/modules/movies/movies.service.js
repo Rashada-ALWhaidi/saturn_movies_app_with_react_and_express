@@ -24,6 +24,13 @@ export const getAllMovies = async() => {
 export const getMovieById = async(id) => {
     const readingData = await readJsonFile();
 
+
+// validate the id parameter
+const isValidId = !isNaN(id) && parseInt(id) > 0;
+if (!isValidId) {
+    throw new AppError("Invalid movie ID", 400);
+}
+
 // find the movie with the matching id
     const movie = readingData.find(movie => movie.id === parseInt(id));
 

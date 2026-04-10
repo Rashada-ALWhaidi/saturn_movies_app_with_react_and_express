@@ -30,7 +30,7 @@ export const getMovieById = async(id) => {
 // validate if the movie exists
     const movieExists = readingData.some(movie => movie.id === parseInt(id));
     if (!movieExists) {
-        throw new Error("Movie not found");
+        throw new AppError("Movie not found", 404);
     }
     
     return movie;

@@ -28,12 +28,8 @@ export const getMovieById = async(req, res) => {
 export const createMovie = async(req,res)=>{
   const { title, director, releaseYear } = req.body;
   const newMovie = await service.createMovie({ title, director, releaseYear });
-  if (!newMovie) {
-    return res.status(400).json({
-      message: "Failed to create movie"
-
-    });
-  }
+ 
+  
   res.json({
     message: "Movie created successfully",
     data: {
@@ -49,11 +45,6 @@ export const updateMovie = async(req,res)=>{
 
   const updatedMovie = await service.updateMovie(id, { title, director, releaseYear });
    
-  if (!updatedMovie) {
-    return res.status(400).json({
-      message: "Failed to update movie"
-    });
-  }
   res.json({
     message: "Movie updated successfully",
     data: {
@@ -67,11 +58,7 @@ export const updateMovie = async(req,res)=>{
 export const deleteMovie = async(req,res)=>{
   const { id } = req.params;
   const deletedMovie = await service.deleteMovie(id);
-  if (!deletedMovie) {
-    return res.status(400).json({
-      message: "Failed to delete movie"
-    });
-  }
+ 
   res.json({
     message: "Movie deleted successfully",
     data: {

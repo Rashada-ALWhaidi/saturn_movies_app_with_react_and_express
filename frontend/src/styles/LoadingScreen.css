@@ -1,0 +1,218 @@
+.loading-home {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.15) 100%),
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.06), transparent 45%),
+        #111;
+    color: white;
+    padding: 28px 32px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.loading-home__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 70% 35%, rgba(255, 255, 255, 0.12), transparent 28%),
+        radial-gradient(circle at 50% 50%, rgba(255, 180, 0, 0.08), transparent 24%);
+    pointer-events: none;
+}
+
+.loading-home__topbar,
+.loading-home__hero,
+.loading-home__carousel {
+    position: relative;
+    z-index: 1;
+}
+
+.loading-home__topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.loading-home__badge {
+    width: 90px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(255, 208, 0, 0.7);
+}
+
+.loading-home__search {
+    width: 170px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.loading-home__hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.loading-home__content {
+    max-width: 540px;
+    margin-left: 56px;
+}
+
+.loading-home__title {
+    width: 340px;
+    height: 30px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.16);
+    margin-bottom: 10px;
+}
+
+.loading-home__title.short {
+    width: 260px;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+.loading-home__meta-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.loading-home__meta {
+    height: 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.loading-home__meta.imdb {
+    width: 34px;
+}
+
+.loading-home__meta.rating {
+    width: 46px;
+}
+
+.loading-home__meta.year {
+    width: 34px;
+}
+
+.loading-home__meta.runtime {
+    width: 88px;
+}
+
+.loading-home__meta.genre {
+    width: 50px;
+}
+
+.loading-home__description {
+    margin-bottom: 26px;
+}
+
+.loading-home__line {
+    width: 100%;
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    margin-bottom: 10px;
+}
+
+.loading-home__line.short {
+    width: 75%;
+}
+
+.loading-home__arrows {
+    display: flex;
+    gap: 10px;
+}
+
+.loading-home__arrow {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.loading-home__carousel {
+    display: flex;
+    gap: 16px;
+    align-items: end;
+    overflow: hidden;
+    padding: 0 12px 8px;
+}
+
+.loading-home__card {
+    width: 98px;
+    height: 128px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    flex: 0 0 auto;
+}
+
+.loading-home__card.active {
+    width: 120px;
+    height: 156px;
+    border: 2px solid rgba(255, 215, 0, 0.8);
+    box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+}
+
+.shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.08) 45%,
+            rgba(255, 255, 255, 0.18) 50%,
+            transparent 100%);
+    animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@media (max-width: 768px) {
+    .loading-home {
+        padding: 20px 16px 28px;
+    }
+
+    .loading-home__content {
+        margin-left: 0;
+        max-width: 100%;
+    }
+
+    .loading-home__title {
+        width: 260px;
+    }
+
+    .loading-home__title.short {
+        width: 190px;
+    }
+
+    .loading-home__carousel {
+        gap: 12px;
+    }
+
+    .loading-home__card {
+        width: 82px;
+        height: 112px;
+    }
+
+    .loading-home__card.active {
+        width: 98px;
+        height: 136px;
+    }
+}

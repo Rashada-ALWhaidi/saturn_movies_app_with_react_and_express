@@ -11,9 +11,9 @@
 ## How to run Backend
 cd backend
 npm install
-node index.js
+npm run dev
 
 ## How to run Frontend
 cd frontend
 npm install
-npm start
+npm run dev
